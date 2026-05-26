@@ -238,13 +238,17 @@ textarea {
 }
 
 .feature-grid {
+    width: min(760px, 100%);
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(280px, 350px));
+    justify-content: center;
+    justify-items: center;
     gap: 24px;
     margin: clamp(70px, 10vw, 150px) auto 0;
 }
 
 .glass-card {
+    width: 100%;
     min-height: 190px;
     padding: 34px 28px;
     display: flex;
@@ -595,7 +599,6 @@ textarea.form-control {
         width: min(100%, 420px);
     }
 
-    .feature-grid,
     .catalog-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }

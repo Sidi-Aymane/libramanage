@@ -4,22 +4,15 @@ require_once __DIR__ . '/config.php';
 
 $stats = [
     'books' => 0,
-    'available' => 0,
-    'borrowed' => 0,
 ];
 
 if (db() !== null) {
     try {
-        $result = db()->query('SELECT COUNT(*) AS total, SUM(availability = 1) AS available FROM livres');
+        $result = db()->query('SELECT COUNT(*) AS total FROM livres');
         $row = $result->fetch_assoc();
         $stats['books'] = (int) ($row['total'] ?? 0);
-        $stats['available'] = (int) ($row['available'] ?? 0);
-
-        $result = db()->query("SELECT COUNT(*) AS total FROM emprunts WHERE status = 'borrowed'");
-        $row = $result->fetch_assoc();
-        $stats['borrowed'] = (int) ($row['total'] ?? 0);
     } catch (mysqli_sql_exception $exception) {
-        $stats = ['books' => 0, 'available' => 0, 'borrowed' => 0];
+        $stats = ['books' => 0];
     }
 }
 
@@ -45,11 +38,6 @@ require_once __DIR__ . '/includes/header.php';
             <a class="glass-card" href="livres.php">
                 <h2>Books</h2>
                 <p><?= $stats['books'] > 0 ? e((string) $stats['books']) . ' livres dans le catalogue' : 'Browse and discover books easily' ?></p>
-            </a>
-
-            <a class="glass-card" href="livres.php?status=available">
-                <h2>Borrowing</h2>
-                <p><?= $stats['available'] > 0 ? e((string) $stats['available']) . ' livres disponibles maintenant' : 'Borrow available books instantly' ?></p>
             </a>
 
             <a class="glass-card" href="support.php">
